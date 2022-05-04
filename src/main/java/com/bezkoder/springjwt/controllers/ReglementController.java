@@ -1,25 +1,37 @@
-package tn.spring.projet.controller;
+package com.bezkoder.springjwt.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.spring.projet.Entity.Reglement;
-import tn.spring.projet.Service.ReglementService;
+import com.bezkoder.springjwt.models.Reglement;
+import com.bezkoder.springjwt.Services.ReglementService;
 
+import java.util.List;
+
+@RequestMapping("/Reglement")
 @RestController
 public class ReglementController {
+
+
 
     @Autowired
     ReglementService reglementService;
 
-    @PostMapping("/addReglement/{idVisite}")
-    public Reglement createReglemnt(@RequestBody Reglement reglement, @PathVariable(value = "idVisite")Long idVisite ) {
-        return  reglementService.createReglement(reglement, idVisite);
-        /* Post post1=new Post();
-        BadWordConfig badWordConfig = new BadWordConfig();
-        post1.setDescription(badWordConfig.filterText2(post1.getDescription()));
-        System.out.println(post1.getDescription());
-        return post1;*/
+    @PostMapping("/getReglement/{idVisite}")
+    public Reglement createReglemnt(@RequestBody Reglement reglement ) {
+        return  reglementService.createReglement(reglement);
 
+    }
+    @PostMapping("/addReglement")
+    public Reglement createAgent(@RequestBody Reglement reglement ) {
+        return  reglementService.createReglement(reglement);
+
+    }
+
+    @GetMapping("/retrieve-reglements")
+    @ResponseBody
+    public List<Reglement> getReglement() {
+        List<Reglement> listReglement = reglementService.retrieveAllReglemet();
+        return listReglement;
     }
 
     @PutMapping("/updateReglement")
@@ -27,11 +39,16 @@ public class ReglementController {
         return reglementService.updateReglement(reglement);
     }
 
-    @DeleteMapping("/deletePoste/{id_post}")
-    public String deletePost(@PathVariable Long idVsite){
-        return reglementService.deleteReglement(idVsite);
+
+    @GetMapping("/retrieve-Reglement/{Reglement-id}")
+    @ResponseBody
+    public Reglement getReglement(@PathVariable("Reglement-id") Long idReglement ) {
+        return reglementService.retrieveReglements(idReglement);
+
     }
 
-
-
+    @DeleteMapping("/deleteReglemet/{idReglemet}")
+    public String deleteReglement(@PathVariable Long idReglemet){
+        return reglementService.deleteReglement(idReglemet);
+    }
 }

@@ -1,11 +1,10 @@
-package tn.spring.projet.Entity;
+package com.bezkoder.springjwt.models;
 
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-//import lombok.Getter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,9 +29,6 @@ public class Agent implements Serializable {
         return LastName;
     }
 
-    public Visite getVisite() {
-        return visite;
-    }
 
     public void setIdAgent(Long idAgent) {
         this.idAgent = idAgent;
@@ -46,9 +42,6 @@ public class Agent implements Serializable {
         LastName = lastName;
     }
 
-    public void setVisite(Visite visite) {
-        this.visite = visite;
-    }
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -57,6 +50,5 @@ public class Agent implements Serializable {
     String Name;
     String LastName;
 
-    @OneToOne(mappedBy = "agent")
-    private Visite visite;
+
 }

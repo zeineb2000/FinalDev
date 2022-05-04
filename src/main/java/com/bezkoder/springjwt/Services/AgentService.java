@@ -1,13 +1,13 @@
-package tn.spring.projet.Service;
+package com.bezkoder.springjwt.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import tn.spring.projet.Entity.Agent;
-import tn.spring.projet.Entity.Visite;
-import tn.spring.projet.* ;
-import tn.spring.projet.Repository.AgentRepository;
-import tn.spring.projet.Repository.VisiteRepository;
+import com.bezkoder.springjwt.repository.*;
+import com.bezkoder.springjwt.interfaces.*;
+import com.bezkoder.springjwt.models.*;
+
+import java.util.List;
 
 
 @Component
@@ -18,36 +18,45 @@ public class AgentService implements IAgent {
 
 
 
+        @Autowired
+        private AgentRepository agentRepository;
 
 
-    @Autowired(required = false)
-        private AgentRepository AgentRepository;
 
-    @Autowired(required = false)
-        private VisiteRepository visiteRepository;
-
-
-    @Override
-        public Agent createAgent(Agent agent, Long idViste) {
-            Visite Visite=visiteRepository.findById(idViste).orElse(null);
-            //p.getComments().add(e);
-
-            agent.setVisite(Visite);
-         AgentRepository.save(agent);
-            return null;
-
+        public AgentService(AgentRepository agentRepository, VisiteRepository visiteRepository) {
+            this.agentRepository = agentRepository;
 
         }
 
-        public String deleteAgent(Long id_post){
-            Agent Agent = AgentRepository.findById(id_post).orElseThrow(() -> new RuntimeException("post not found"));
-            AgentRepository.deleteById(Agent.getIdAgent());
+
+        @Override
+        public List<Agent> retrieveAllAgents() {
+            return agentRepository.findAll();
+        }
+        @Override
+        public Agent createAgent(Agent agent ){
+
+            agentRepository.save(agent);
+            return null;
+
+        }
+        @Override
+        public String deleteAgent(Long idAgent){
+            Agent agent = agentRepository.findById(idAgent).orElseThrow(() -> new RuntimeException("agent not found"));
+            agentRepository.deleteById(agent.getIdAgent());
             return null;
         }
+        @Override
+        public Agent updateAgent(Agent agent){
+            return agentRepository.save(agent);
 
-        public Agent updateAgent(Agent Agent){
-            return AgentRepository.save(Agent);
+        }
 
+
+        @Override
+        public Agent retrieveAgent(Long idAgent) {
+            // TODO Auto-generated method stub
+            return agentRepository.findById(idAgent).orElse(null);
         }
 
 

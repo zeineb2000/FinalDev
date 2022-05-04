@@ -1,4 +1,4 @@
-package tn.spring.projet.Entity;
+package com.bezkoder.springjwt.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +25,5 @@ public class Reglement implements Serializable {
     String LastName;
 
 
-    @OneToOne(mappedBy = "reglement")
-    private Visite visite;
+
 }

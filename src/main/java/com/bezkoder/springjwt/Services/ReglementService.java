@@ -1,15 +1,13 @@
-package tn.spring.projet.Service;
+package com.bezkoder.springjwt.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import tn.spring.projet.Entity.Agent;
-import tn.spring.projet.Entity.Reglement;
-import tn.spring.projet.Entity.*;
-import tn.spring.projet.Repository.ReglementRepository;
+import com.bezkoder.springjwt.models.*;
+import com.bezkoder.springjwt.repository.*;
+import com.bezkoder.springjwt.interfaces.IReglement;
 
-import tn.spring.projet.Repository.AgentRepository;
-import tn.spring.projet.Repository.*;
+import java.util.List;
 
 
 @Component
@@ -19,34 +17,38 @@ public class  ReglementService   implements IReglement {
 
 
 
-    @Autowired
-    private ReglementRepository ReglementRepository;
 
-    @Autowired
-    private VisiteRepository visiteRepository;
+        @Autowired
+        private ReglementRepository reglementRepository;
 
 
 
-    public Reglement createReglement(Reglement reglement, Long idViste) {
-        Visite Visite=visiteRepository.findById(idViste).orElse(null);
-        //p.getComments().add(e);
+        @Override
+        public Reglement createReglement(Reglement reglement) {
 
-        reglement.setVisite(Visite);
-        ReglementRepository.save(reglement);
-        return null;
+            reglementRepository.save(reglement);
+            return null;
+
+        }
+        @Override
+        public List<Reglement> retrieveAllReglemet() {
+            return reglementRepository.findAll();
+        }
+        @Override
+        public String deleteReglement(Long idReglemet){
+            Reglement reglement = reglementRepository.findById(idReglemet).orElseThrow(() -> new RuntimeException("reglement not found"));
+            reglementRepository.deleteById(reglement.getIdReglemet());
+            return null;
+        }
+        @Override
+        public Reglement updateReglement(Reglement reglement){
+            return reglementRepository.save(reglement);
+
+        }
 
 
-    }
-
-    public String deleteReglement(Long id_post){
-        Reglement reglement = ReglementRepository.findById(id_post).orElseThrow(() -> new RuntimeException("post not found"));
-        ReglementRepository.deleteById(reglement.getIdReglemet());
-        return null;
-    }
-
-    public Reglement updateReglement(Reglement reglement){
-        return ReglementRepository.save(reglement);
-
-    }
-
+        @Override
+        public Reglement retrieveReglements(Long idReglemet) {
+            return reglementRepository.findById(idReglemet).orElse(null);
+        }
 }

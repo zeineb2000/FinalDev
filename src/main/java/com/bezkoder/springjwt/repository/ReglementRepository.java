@@ -1,8 +1,8 @@
-package tn.spring.projet.Repository;
+package com.bezkoder.springjwt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import tn.spring.projet.Entity.Reglement;
+import com.bezkoder.springjwt.models.Reglement;
 @Repository
 public interface ReglementRepository extends JpaRepository <Reglement , Long > {
 
